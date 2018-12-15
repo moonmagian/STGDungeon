@@ -13,8 +13,7 @@ public class CardCore : MonoBehaviour
     public int maxCardNumber = 3;
     public int initCost = 3;
     public float cycleTime;
-    [HideInInspector]
-    public int nextCost = 3;
+    [HideInInspector] public int nextCost = 3;
 
     public TextMesh costText;
     public GameObject[] cardSlots = new GameObject[3];
@@ -23,6 +22,7 @@ public class CardCore : MonoBehaviour
     [HideInInspector] public int selecting = 0;
     private int cost;
     private float currentCycleTime;
+
     private List<GameCard> drawDeck = new List<GameCard>()
     {
         BasicCards.backup, BasicCards.backup, BasicCards.lazer, BasicCards.lazer, BasicCards.portableBomb,
@@ -62,7 +62,16 @@ public class CardCore : MonoBehaviour
                 }
 
                 handCards.RemoveAt(n);
+                cardArrow.GetComponents<AudioSource>()[1].Play();
             }
+            else
+            {
+                cardArrow.GetComponents<AudioSource>()[2].Play();
+            }
+        }
+        else
+        {
+            cardArrow.GetComponents<AudioSource>()[2].Play();
         }
     }
 
@@ -121,10 +130,19 @@ public class CardCore : MonoBehaviour
             newCycle();
         }
 
-        cycleIndicator.transform.localScale = new Vector3(cycleIndicator.transform.localScale.x, cycleIndicator.transform.localScale.y, 0.18f * currentCycleTime / cycleTime);
+        cycleIndicator.transform.localScale = new Vector3(cycleIndicator.transform.localScale.x,
+            cycleIndicator.transform.localScale.y, 0.18f * currentCycleTime / cycleTime);
         costText.text = "Energy:" + cost.ToString();
-        cardArrow.transform.position = new Vector3(cardArrow.transform.position.x, cardArrow.transform.position.y,
+        Vector3 npos = new Vector3(cardArrow.transform.position.x, cardArrow.transform.position.y,
             cardSlots[selecting].transform.position.z);
+        if (Mathf.Abs(cardArrow.transform.position.z - npos.z) >= 0.01f)
+        {
+            cardArrow.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 7f * (npos.z - cardArrow.transform.position.z));
+        }
+        else
+        {
+            cardArrow.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 0f);
+        }
         for (var i = 0; i != maxCardNumber; ++i)
         {
             if (i < cardSlots.Length)
@@ -148,7 +166,7 @@ public class CardCore : MonoBehaviour
         cost = initCost;
         usedDeck.AddRange(handCards);
         handCards.Clear();
-        for(var i = 0; i < maxCardNumber; ++i) DrawOne();
+        for (var i = 0; i < maxCardNumber; ++i) DrawOne();
         currentCycleTime = cycleTime;
         GetComponent<PlayerBuffManager>().onNewCycle();
     }

@@ -18,6 +18,7 @@ public class BulletBasicBahaviour : MonoBehaviour {
 		if (coll.gameObject.tag == "bulletBorder") {
 			// print("test");
 			Destroy(gameObject);
+			
 		}
 	}
 }

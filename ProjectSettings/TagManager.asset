@@ -8,6 +8,8 @@ TagManager:
   - enemy
   - enemyBullet
   - playerBullet
+  - playAreaBorder
+  - BulletReflecter
   layers:
   - Default
   - TransparentFX
