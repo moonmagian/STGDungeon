@@ -8,7 +8,7 @@ public class FairyConnection : MonoBehaviour
     public float[] fairyLastStopTime = new float[2] {0, 0};
     public float[] fairyStopDuration = new float[2] {10, 10};
     public int bossStep = 0;
-    public float[,] stepHP = new float[2, 3] {{450, 600, 600}, {450, 600, 600}};
+    public float[,] stepHP = new float[2, 3] {{450, 600, 685}, {450, 600, 685}};
 
     public float[,] currentHP;
     public TextMesh spellname;
@@ -71,7 +71,7 @@ public class FairyConnection : MonoBehaviour
                 enemyLifeBar2.transform.localScale.y, enemyLifeBar2.transform.localScale.z);
         if (fairyStatus[0] == STATUS_STOPPED && fairyStatus[1] == STATUS_STOPPED)
         {
-            if (bossStep == 1 || bossStep == 0)
+            if (bossStep == 1 || bossStep == 0 || bossStep == 2)
             {
                 if (bossStep == 1)
                 {
@@ -100,11 +100,14 @@ public class FairyConnection : MonoBehaviour
                     fairy2.velocity = new Vector3();
                 }
 
-                if (nextStep)
+                if (nextStep && bossStep != 2)
                 {
                     ++bossStep;
                     fairyStatus[1] = STATUS_RUNNING;
                     fairyStatus[0] = STATUS_RUNNING;
+                } else if (nextStep && bossStep == 2)
+                {
+                    spellname.text = "Thanks for Watching!";
                 }
             }
         }

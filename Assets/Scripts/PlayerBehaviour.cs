@@ -29,4 +29,9 @@ public class PlayerBehaviour : MonoBehaviour
     {
         HitText.text = "Hit : " + hit.ToString();
     }
+
+    public void instanceObj(GameObject prefab)
+    {
+        Instantiate(prefab, transform.position, new Quaternion());
+    }
 }

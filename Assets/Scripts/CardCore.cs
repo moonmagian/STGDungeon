@@ -21,7 +21,7 @@ public class CardCore : MonoBehaviour
     public GameObject cycleIndicator;
     [HideInInspector] public int selecting = 0;
     private int cost;
-    private float currentCycleTime;
+    public float currentCycleTime;
 
     private List<GameCard> drawDeck = new List<GameCard>()
     {

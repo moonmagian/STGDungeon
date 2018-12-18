@@ -2294,6 +2294,7 @@ MonoBehaviour:
   cardArrow: {fileID: 694932080}
   cycleIndicator: {fileID: 1528583754}
   selecting: 0
+  currentCycleTime: 0
 --- !u!114 &846942151
 MonoBehaviour:
   m_ObjectHideFlags: 0

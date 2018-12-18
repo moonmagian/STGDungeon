@@ -53,6 +53,9 @@ namespace AssemblyCSharp.Assets.Scripts
             if (method == "use")
             {
                 Debug.Log("Used portableBomb");
+                GameObject pb = Resources.Load<GameObject>("Prefabs/PortableBomb");
+                player.GetComponent<PlayerBehaviour>().instanceObj(pb);
+
             }
 
             return true;
@@ -63,11 +66,11 @@ namespace AssemblyCSharp.Assets.Scripts
             if (method == "use")
             {
                 Debug.Log("Used speedup");
+                player.GetComponent<CardCore>().currentCycleTime /= 2;
             }
 
             return true;
         }
-
         public static GameCard backup = new GameCard("backup", 1, backupCallBack);
         public static GameCard lazer = new GameCard("lazer", 1, lazerCallBack);
         public static GameCard portableBomb = new GameCard("portable_bomb", 2, portableBombCallBack);
